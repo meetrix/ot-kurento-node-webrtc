@@ -220,7 +220,7 @@ var CLIENTS=[];
 wss.on('connection', function(ws) {
     var sessionId = nextUniqueId();
     console.log('Connection received with sessionId ' + sessionId);
-    CLIENTS.push(ws)
+    CLIENTS.push({"socket":ws,"sessionId":sessionId})
     ws.on('error', function(error) {
         console.log('Connection ' + sessionId + ' error');
         stop(sessionId);
@@ -259,7 +259,7 @@ wss.on('connection', function(ws) {
 
         case 'command' :
             console.log("command",message);
-            command(message);
+            command(message,sessionId);
             break;
 
         default:
@@ -458,11 +458,14 @@ function onIceCandidate(sessionId, _candidate) {
         candidatesQueue[sessionId].push(candidate);
     }
 }
-function command(message) {
+function command(message,sessionId) {
     try {
         CLIENTS.forEach(function (client) {
-            console.log(CLIENTS.length)
-            client.send(JSON.stringify(message))
+            if(client.sessionId !== sessionId){
+                console.log(CLIENTS.length)
+                client.socket.send(JSON.stringify(message))
+            }
+
         })
 
     } catch(exception) {
