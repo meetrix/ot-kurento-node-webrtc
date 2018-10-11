@@ -124,6 +124,10 @@ ws.onmessage = function(message) {
 	case 'iceCandidate':
 		webRtcPeer.addIceCandidate(parsedMessage.candidate)
 		break;
+	case 'command' :
+		console.log("command",message);
+
+		break;
 	default:
 		console.error('Unrecognized message', parsedMessage);
 	}
@@ -319,6 +323,13 @@ function hideSpinner() {
 		arguments[i].poster = './img/webrtc.png';
 		arguments[i].style.background = '';
 	}
+}
+function command() {
+    var message = {
+        id : 'command',
+        message : "test"
+    }
+    sendMessage(message);
 }
 
 /**

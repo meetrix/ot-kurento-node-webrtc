@@ -26,8 +26,8 @@ var https = require('https');
 
 var argv = minimist(process.argv.slice(2), {
   default: {
-      as_uri: "https://localhost:6008/",
-      ws_uri: "ws://localhost:8888/kurento"
+      as_uri: "https://192.168.8.112:6008/",
+      ws_uri: "ws://34.221.23.226:8888/kurento"
   }
 });
 
@@ -216,11 +216,11 @@ var wss = new ws.Server({
     server : server,
     path : '/one2one'
 });
-
+var CLIENTS=[];
 wss.on('connection', function(ws) {
     var sessionId = nextUniqueId();
     console.log('Connection received with sessionId ' + sessionId);
-
+    CLIENTS.push(ws)
     ws.on('error', function(error) {
         console.log('Connection ' + sessionId + ' error');
         stop(sessionId);
@@ -255,6 +255,11 @@ wss.on('connection', function(ws) {
 
         case 'onIceCandidate':
             onIceCandidate(sessionId, message.candidate);
+            break;
+
+        case 'command' :
+            console.log("command",message);
+            command(message);
             break;
 
         default:
@@ -453,5 +458,22 @@ function onIceCandidate(sessionId, _candidate) {
         candidatesQueue[sessionId].push(candidate);
     }
 }
+function command(message) {
+    try {
+        CLIENTS.forEach(function (client) {
+            console.log(CLIENTS.length)
+            client.send(JSON.stringify(message))
+        })
+
+    } catch(exception) {
+        console.error(exception);
+    }
+
+}
 
 app.use(express.static(path.join(__dirname, 'static')));
+app.get('/test', function(req, res){
+    res.sendFile(__dirname + '/static/Test.html');
+});
+
+
