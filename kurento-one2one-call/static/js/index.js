@@ -80,8 +80,8 @@ window.onload = function() {
 		console = new Console();
 	}
 	setRegisterState(NOT_REGISTERED);
-	var drag = new Draggabilly(document.getElementById('videoSmall'));
-	videoInput = document.getElementById('videoInput');
+	//var drag = new Draggabilly(document.getElementById('videoSmall'));
+	//videoInput = document.getElementById('videoInput');
 	videoOutput = document.getElementById('videoOutput');
 	document.getElementById('name').focus();
 
@@ -179,7 +179,7 @@ function incomingCall(message) {
 	setCallState(PROCESSING_CALL);
 	if (confirm('User ' + message.from
 			+ ' is calling you. Do you accept the call?')) {
-		showSpinner(videoInput, videoOutput);
+		showSpinner( videoOutput);
 
 		var options = {
 			localVideo : videoInput,
