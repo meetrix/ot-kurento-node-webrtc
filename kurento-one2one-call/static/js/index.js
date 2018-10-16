@@ -25,7 +25,6 @@ const NOT_REGISTERED = 0;
 const REGISTERING = 1;
 const REGISTERED = 2;
 var registerState = null
-
 function setRegisterState(nextState) {
 	switch (nextState) {
 	case NOT_REGISTERED:
@@ -83,7 +82,7 @@ window.onload = function() {
 	//var drag = new Draggabilly(document.getElementById('videoSmall'));
 	//videoInput = document.getElementById('videoInput');
 	videoOutput = document.getElementById('videoOutput');
-	document.getElementById('name').focus();
+	//document.getElementById('name').focus();
 
 	// document.getElementById('register').addEventListener('click', function() {
 	// 	register();
@@ -128,11 +127,22 @@ ws.onmessage = function(message) {
 		console.log("command",message);
 
 		break;
+	case 'connected':
+        autoRegisterForTest();
+		break;
 	default:
 		console.error('Unrecognized message', parsedMessage);
 	}
 }
+function autoRegisterForTest(){
+    setRegisterState(REGISTERING);
 
+    var message = {
+        id : 'register',
+        name : 'test2'
+    };
+    sendMessage(message);
+}
 function resgisterResponse(message) {
 	if (message.response == 'accepted') {
 		setRegisterState(REGISTERED);
@@ -246,7 +256,7 @@ function call() {
 
 	setCallState(PROCESSING_CALL);
 
-	showSpinner(videoInput, videoOutput);
+	showSpinner( videoOutput);
 
 	var options = {
 		localVideo : videoInput,
@@ -324,12 +334,20 @@ function hideSpinner() {
 		arguments[i].style.background = '';
 	}
 }
-function command() {
-    var message = {
-        id : 'command',
-        message : "test"
-    }
-    sendMessage(message);
+function command(e) {
+    e.preventDefault();
+    var command = document.getElementById("message").value;
+    if(command !== "" && (command ==="up"|| command ==="down" || command ==="left" || command ==="right")){
+        var message = {
+            id : 'command',
+            message :command
+        }
+        sendMessage(message);
+	}
+	else{
+    	alert("please enter one of command from up,down,left,right ")
+	}
+
 }
 
 /**

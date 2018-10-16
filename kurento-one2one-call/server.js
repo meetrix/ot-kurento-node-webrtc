@@ -26,8 +26,8 @@ var https = require('https');
 
 var argv = minimist(process.argv.slice(2), {
   default: {
-      as_uri: "https://192.168.8.111:6008/",
-      ws_uri: "ws://34.219.226.127:8888/kurento"
+      as_uri: "https://192.168.8.113:6008/",
+      ws_uri: "ws://34.211.154.37:8888/kurento"
   }
 });
 
@@ -157,10 +157,15 @@ CallMediaPipeline.prototype.createPipeline = function(callerId, calleeId, ws, ca
 
                     calleeWebRtcEndpoint.on('OnIceCandidate', function(event) {
                         var candidate = kurento.getComplexType('IceCandidate')(event.candidate);
-                        userRegistry.getById(calleeId).ws.send(JSON.stringify({
-                            id : 'iceCandidate',
-                            candidate : candidate
-                        }));
+                        try {
+                            userRegistry.getById(calleeId).ws.send(JSON.stringify({
+                                id: 'iceCandidate',
+                                candidate: candidate
+                            }));
+                        }
+                        catch (e){
+
+                        }
                     });
 
                     callerWebRtcEndpoint.connect(calleeWebRtcEndpoint, function(error) {
@@ -221,6 +226,7 @@ wss.on('connection', function(ws) {
     var sessionId = nextUniqueId();
     console.log('Connection received with sessionId ' + sessionId);
     CLIENTS.push({"socket":ws,"sessionId":sessionId})
+    ws.send(JSON.stringify({id:'connected', response : 'accept '}));
     ws.on('error', function(error) {
         console.log('Connection ' + sessionId + ' error');
         stop(sessionId);
@@ -230,6 +236,12 @@ wss.on('connection', function(ws) {
         console.log('Connection ' + sessionId + ' closed');
         stop(sessionId);
         userRegistry.unregister(sessionId);
+        for(var i =0;i<CLIENTS.length;i++){
+            if(sessionId === CLIENTS[i].sessionId){
+                CLIENTS.splice(i, 1);
+
+            }
+        }
     });
 
     ws.on('message', function(_message) {
@@ -462,7 +474,7 @@ function command(message,sessionId) {
     try {
         CLIENTS.forEach(function (client) {
             if(client.sessionId !== sessionId){
-                console.log(CLIENTS.length)
+                console.log("cleints",CLIENTS.length)
                 client.socket.send(JSON.stringify(message))
             }
 

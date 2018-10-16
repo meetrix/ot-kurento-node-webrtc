@@ -76,30 +76,30 @@
       <!--</div>-->
       <div class="row">
         <div class="col-md-5">
-          <label class="control-label" for="name">Name</label>
-          <div class="row">
-            <div class="col-md-6">
-              <input id="name" name="name" class="form-control" type="text"/>
-            </div>
-            <div class="col-md-6 text-right">
-              <button id="register" onclick="register()" class="btn btn-primary">
-                <span class="glyphicon glyphicon-plus"></span> Register</button>
-            </div>
-          </div>
+          <!--<label class="control-label" for="name">Name</label>-->
+          <!--<div class="row">-->
+            <!--<div class="col-md-6">-->
+              <!--<input id="name" name="name" class="form-control" type="text"/>-->
+            <!--</div>-->
+            <!--<div class="col-md-6 text-right">-->
+              <!--<button id="register" onclick="register()" class="btn btn-primary">-->
+                <!--<span class="glyphicon glyphicon-plus"></span> Register</button>-->
+            <!--</div>-->
+          <!--</div>-->
           <br/>
           <br/>
-          <label class="control-label" for="peer">Peer</label>
-          <div class="row">
-            <div class="col-md-6">
-              <input id="peer" name="peer" class="form-control" type="text">
-            </div>
-            <div class="col-md-6 text-right">
-              <button id="call" onclick="call()" class="btn btn-success">
-                <span class="glyphicon glyphicon-play"></span> Call</button>
-              <button id="terminate" onclick="stop()" class="btn btn-danger">
-                <span class="glyphicon glyphicon-stop"></span> Stop</button>
-            </div>
-          </div>
+          <!--<label class="control-label" for="peer">Peer</label>-->
+          <!--<div class="row">-->
+            <!--<div class="col-md-6">-->
+              <!--<input id="peer" name="peer" class="form-control" type="text">-->
+            <!--</div>-->
+            <!--<div class="col-md-6 text-right">-->
+              <!--<button id="call" onclick="call()" class="btn btn-success">-->
+                <!--<span class="glyphicon glyphicon-play"></span> Call</button>-->
+              <!--<button id="terminate" onclick="stop()" class="btn btn-danger">-->
+                <!--<span class="glyphicon glyphicon-stop"></span> Stop</button>-->
+            <!--</div>-->
+          <!--</div>-->
           <br/>
           <label class="control-label phone-tag" for="console">Console</label><br><br>
           <div id="console" class="democonsole phone-tag">
@@ -119,13 +119,13 @@
     <div class="container">
       <div class="row">
         <div class="col-md-5">
-          <form>
+
             <div class="form-group">
               <label for="message">Enter  Message</label>
               <input type="text" class="form-control" id="message" aria-describedby="messageHelp" placeholder="Enter Message">
             </div>
-            <button type="submit" class="btn btn-primary" onclick="command()">Send</button>
-          </form>
+            <button type="submit" class="btn btn-primary" onclick=" command(event)">Send</button>
+
         </div>
       </div>
     </div>
