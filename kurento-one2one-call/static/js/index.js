@@ -349,6 +349,21 @@ function command(e) {
 	}
 
 }
+function showCoords(event) {
+    var testDiv = document.getElementById("videoOutput").getBoundingClientRect();
+    console.log("test div offset",testDiv);
+    var x = event.clientX;
+    var y = event.clientY;
+    var coords = "X coords: " + x + ", Y coords: " + y;
+    console.log("coords",coords);
+    var message = {
+        id : 'command',
+		x:""+parseFloat((x-testDiv.x)/testDiv.width),
+		y:""+parseFloat((y-testDiv.y)/testDiv.height)
+
+    }
+    sendMessage(message)
+}
 
 /**
  * Lightbox utility (to display media pipeline image in a modal dialog)

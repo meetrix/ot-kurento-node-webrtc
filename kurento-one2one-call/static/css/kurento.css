@@ -41,13 +41,13 @@ video,#console {
 	transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 
 }
-video{
-	-moz-transform:rotate(90deg);
-	-webkit-transform:rotate(90deg);
-	-o-transform:rotate(90deg);
-	-ms-transform:rotate(90deg);
-	transform:rotate(90deg);
-}
+/*video{*/
+	/*-moz-transform:rotate(90deg);*/
+	/*-webkit-transform:rotate(90deg);*/
+	/*-o-transform:rotate(90deg);*/
+	/*-ms-transform:rotate(90deg);*/
+	/*transform:rotate(90deg);*/
+/*}*/
 
 
 #console {
