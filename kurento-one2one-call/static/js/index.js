@@ -125,7 +125,7 @@ ws.onmessage = function(message) {
 		break;
 	case 'command' :
 		console.log("command",message);
-        sendMessage(message);
+        //sendMessage(message);
 
 		break;
 	case 'connected':
